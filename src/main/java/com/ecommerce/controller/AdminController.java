@@ -30,6 +30,8 @@ public class AdminController {
     public String dashboard(Model model) {
         model.addAttribute("totalProducts", productService.getAllProducts().size());
         model.addAttribute("pendingOrders", orderService.getOrdersByStatus("PENDING").size());
+        // đẩy tổng doanh thu theo khoảng thời gian lên server
+        model.addAttribute("totalRevenue", orderService.calculateRevenue(System.currentTimeMillis() - 30L * 24 * 60 * 60 * 1000, System.currentTimeMillis()));
         return "admin/dashboard";
     }
 

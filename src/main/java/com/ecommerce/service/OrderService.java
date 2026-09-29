@@ -108,4 +108,13 @@ public class OrderService {
         cartItemRepository.deleteByUserId(user.getId());
         return savedOrder;
     }
+    public List<Order> findByStatusAndCreatedAtBetween(String status, long startTime, long endTime) {
+        return orderRepository.findByStatusAndCreatedAtBetween(status, startTime, endTime);
+    }
+    // viết hàm tính tổng doanh thu từ các đơn hàng đã hoàn thành (DELIVERED) trong khoảng thời gian nhất định
+    public double calculateRevenue(long startTime, long endTime) {
+            return orderRepository.findByStatusAndCreatedAtBetween("DELIVERED", startTime, endTime).stream()
+                    .mapToDouble(Order::getTotalAmount)
+                .sum();
+    }
 }

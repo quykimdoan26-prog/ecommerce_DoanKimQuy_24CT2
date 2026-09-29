@@ -290,7 +290,7 @@
                     </div>
                     <div class="stat-card">
                         <p class="stat-label">DOANH THU</p>
-                        <p class="stat-number muted">Chưa có dữ liệu</p>
+                        <p class="stat-number muted" th:text="'₫' + ${#numbers.formatInteger(totalRevenue, 0, 'COMMA')}">Chưa có dữ liệu</p>
                     </div>
                 </div>
 
