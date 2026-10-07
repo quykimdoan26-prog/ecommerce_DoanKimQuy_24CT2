@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/ecommerce?useSSL=true&requireSSL=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: ${MYSQLUSER}
-    password: ${MYSQLPASSWORD}
+    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/ecommerce?useSSL=true&requireSSL=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:Kimquy@2006}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

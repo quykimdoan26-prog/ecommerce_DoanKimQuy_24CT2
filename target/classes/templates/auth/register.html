@@ -336,7 +336,7 @@
                 <div th:if="${param.error}" class="notice error">
                     Đã có lỗi xảy ra. Vui lòng kiểm tra lại thông tin.
                 </div>
-
+                <div th:if="${error}" class="notice error" th:text="${error}"></div>
                 <form method="post" th:object="${user}">
                     <div class="field-row">
                         <div class="field">

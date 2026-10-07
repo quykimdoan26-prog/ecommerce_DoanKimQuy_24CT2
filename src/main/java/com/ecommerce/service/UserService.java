@@ -17,6 +17,12 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email đã được đăng ký");
+        }
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Tên đăng nhập đã được đăng ký");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("CUSTOMER");
         user.setCreatedAt(System.currentTimeMillis());
