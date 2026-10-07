@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
+        user.setEmail(user.getEmail().trim().toLowerCase(Locale.ROOT));
+        user.setUsername(user.getUsername().trim());
+
         if(userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email đã được đăng ký");
         }
@@ -26,7 +30,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("CUSTOMER");
         user.setCreatedAt(System.currentTimeMillis());
-        return userRepository.save(user);
+        // Flush immediately so duplicate-key errors are handled by the controller.
+        return userRepository.saveAndFlush(user);
     }
 
     public Optional<User> findByUsername(String username) {
