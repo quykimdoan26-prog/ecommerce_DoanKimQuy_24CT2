@@ -337,7 +337,7 @@
                     Đã có lỗi xảy ra. Vui lòng kiểm tra lại thông tin.
                 </div>
                 <div th:if="${error}" class="notice error" th:text="${error}"></div>
-                <form method="post" th:object="${user}">
+                <form id="registerForm" method="post" th:object="${user}">
                     <div class="field-row">
                         <div class="field">
                             <label for="username">Tên đăng nhập</label>
@@ -361,7 +361,7 @@
                         </div>
                         <div class="field">
                             <label for="password">Mật khẩu</label>
-                            <input type="password" id="password" th:field="*{password}" placeholder="Tối thiểu 8 ký tự" required>
+                            <input type="password" id="password" th:field="*{password}" placeholder="Tối thiểu 8 ký tự" minlength="8" required>
                         </div>
                     </div>
 
@@ -379,5 +379,28 @@
             </div>
         </main>
     </div>
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        registerForm.addEventListener('submit', function (event) {
+            passwordInput.setCustomValidity('');
+            emailInput.setCustomValidity('');
+
+            if (passwordInput.value.length < 8) {
+                passwordInput.setCustomValidity('Mật khẩu phải có ít nhất 8 ký tự.');
+            }
+
+            if (!emailInput.validity.valid) {
+                emailInput.setCustomValidity('Vui lòng nhập email đúng định dạng.');
+            }
+
+            if (!registerForm.checkValidity()) {
+                event.preventDefault();
+                registerForm.reportValidity();
+            }
+        });
+    </script>
 </body>
 </html>
